@@ -45,8 +45,7 @@ class Scrummy {
           try {
             logger(`performing: ${data.type}\n`);
             this[data.type](data, ws);
-          }
-          catch (e) {
+          } catch (e) {
             this.handleError(e.message, ws);
           }
         } else {
@@ -91,7 +90,7 @@ class Scrummy {
     logger(`${message}\n`);
     ws.send(JSON.stringify({
       type: 'error',
-      message: message,
+      message,
     }));
   }
   /**
@@ -120,7 +119,7 @@ class Scrummy {
       this.bucket[requestedGame].users.map(user => user.nickname)
     );
     if (!nickname) {
-      throw new Error('This username is unavailable; please pick another.')
+      throw new Error('This username is unavailable; please pick another.');
     }
     this.bucket[requestedGame].clients.push({
       nickname,
@@ -157,10 +156,10 @@ class Scrummy {
    */
   placeVote(data, ws) {
     if (!this.bucket[data.game]) {
-      throw new Error(`${data.game} does not exist!`)
+      throw new Error(`${data.game} does not exist!`);
     }
     if (!this.points.includes(data.vote.toString())) {
-      throw new Error(`${data.vote} is not a valid vote!`)
+      throw new Error(`${data.vote} is not a valid vote!`);
     }
     this.bucket[data.game].votes[data.nickname] = data.vote;
     ws.send(JSON.stringify({
