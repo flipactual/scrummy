@@ -245,7 +245,6 @@ test.serial.cb('Allows user to reveal votes', t => {
   }));
 });
 
-
 test.serial.cb('Errors if vote is invalid', t => {
   t.plan(1);
   t.context.sockets[0].on('message', response => {

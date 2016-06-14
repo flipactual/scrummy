@@ -174,7 +174,7 @@ class Scrummy {
   }
   /**
    * reveal
-   *   Emits broadcast a reveal event to the appropriate game.
+   *   Broadcasts a reveal event to the appropriate game.
    *
    * @param {Object} data
    *   The message from the client.
