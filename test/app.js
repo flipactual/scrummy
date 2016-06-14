@@ -163,7 +163,7 @@ test.serial.cb('Allows user to vote', t => {
   }));
 });
 
-test.serial.cb('Allows user to reveal votes', t => {
+test.serial.cb('Fails on reveal if there are no votes for the given game', t => {
   t.plan(1);
   let nickname;
   t.context.sockets[0].on('message', response => {
@@ -189,7 +189,7 @@ test.serial.cb('Allows user to reveal votes', t => {
   }));
 });
 
-test.serial.cb('Allows user to reveal votes', t => {
+test.serial.cb('Fails on reveal if game doesn\'t exist', t => {
   t.plan(1);
   t.context.sockets[0].on('message', response => {
     const data = JSON.parse(response);
