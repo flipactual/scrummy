@@ -178,8 +178,6 @@ class Scrummy {
    *
    * @param {Object} data
    *   The message from the client.
-   * @param {Object} ws
-   *   The websocket to respond to.
    * @return {undefined}
    */
   reveal(data) {
