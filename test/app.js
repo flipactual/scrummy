@@ -662,3 +662,44 @@ test.serial.cb('Disallows a vote to be revoked if the respective game does not e
     data: { nickname },
   }));
 });
+
+test.serial.cb('Returns 0 for number of players if game does not exist', (t) => {
+  t.plan(1);
+  const game = 'notanactualgame';
+  t.context.sockets[0].on('message', (response) => {
+    const resp = JSON.parse(response);
+    if (resp.type === 'playerCount') {
+      t.is(resp.data.numPlayers, 0);
+      t.end();
+    }
+  });
+  t.context.sockets[0].send(JSON.stringify({
+    type: 'getPlayerCount',
+    data: { game },
+  }));
+});
+
+
+test.serial.cb('Returns number of players of a given game', (t) => {
+  t.plan(1);
+  const nickname = 'Winston';
+  const game = 'True American';
+  t.context.sockets[0].on('message', (response) => {
+    const resp = JSON.parse(response);
+    if (resp.type === 'youSignedIn') {
+      t.context.sockets[0].send(JSON.stringify({
+        type: 'getPlayerCount',
+        data: { game },
+      }));
+    }
+    if (resp.type === 'playerCount') {
+      t.is(resp.data.numPlayers, 1);
+      t.end();
+    }
+  });
+
+  t.context.sockets[0].send(JSON.stringify({
+    type: 'signIn',
+    data: { game, nickname },
+  }));
+});

@@ -29,6 +29,7 @@ class Scrummy {
       'reveal',
       'revokeVote',
       'disconnect',
+      'getPlayerCount',
     ];
   }
   /**
@@ -178,6 +179,28 @@ class Scrummy {
       data: { votes: this.bucket[data.game].votes },
     }), this.bucket[data.game].clients);
     logger(`${data.nickname} voted ${data.vote} in ${data.game}\n`);
+  }
+  /**
+   * getPlayerCount
+   *   Returns numbers of players for a given game.
+   *
+   * @param {Object} data
+   *   The message from the client.
+   * @param {Object} ws
+   *   The websocket to respond to.
+   * @return {undefined}
+   */
+  getPlayerCount(data, ws) {
+    let numPlayers = 0;
+    const game = getFormattedEntityName(data.game);
+    if (game && game in this.bucket) {
+      numPlayers = this.bucket[game].users.length;
+    }
+    ws.send(JSON.stringify({
+      type: 'playerCount',
+      data: { numPlayers },
+    }));
+    logger(`${game} reported ${numPlayers} players.\n`);
   }
   /**
    * reset
