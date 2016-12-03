@@ -147,7 +147,6 @@ class Scrummy {
     Scrummy.broadcast(JSON.stringify({
       type: 'someoneSignedIn',
       data: {
-        nickname,
         users: this.bucket[requestedGame].users,
       },
     }), this.bucket[requestedGame].clients);
@@ -261,7 +260,7 @@ class Scrummy {
 
     Scrummy.broadcast(JSON.stringify({
       type: 'clientRevoke',
-      data: { nickname: data.nickname },
+      data: { votes: this.bucket[data.game].votes },
     }), this.bucket[data.game].clients);
     logger(`${data.nickname} revoked his or her vote in ${data.game}\n`);
   }
@@ -292,7 +291,7 @@ class Scrummy {
 
     Scrummy.broadcast(JSON.stringify({
       type: 'clientDisconnect',
-      data: { nickname: data.nickname },
+      data: { users: this.bucket[data.game].users },
     }), this.bucket[data.game].clients);
     logger(`${data.nickname} disconnected\n`);
   }
